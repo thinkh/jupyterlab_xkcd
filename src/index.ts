@@ -25,7 +25,7 @@ const extension: JupyterLabPlugin<void> = {
     widget.node.appendChild(img);
 
     // Fetch info about a random comic
-    fetch("https:////egszlpbmle.execute-api.us-east-1.amazonaws.com/prod")
+    fetch("https://egszlpbmle.execute-api.us-east-1.amazonaws.com/prod")
       .then(response => {
         return response.json();
       })
