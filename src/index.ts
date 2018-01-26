@@ -1,7 +1,21 @@
-import { JupyterLab, JupyterLabPlugin } from "@jupyterlab/application";
-import { ICommandPalette } from "@jupyterlab/apputils";
-import { Widget } from "@phosphor/widgets";
+import {
+  JupyterLab,
+  JupyterLabPlugin,
+  ILayoutRestorer // new
+} from "@jupyterlab/application";
+
+import {
+  ICommandPalette,
+  InstanceTracker // new
+} from "@jupyterlab/apputils";
+
+import {
+  JSONExt // new
+} from "@phosphor/coreutils";
+
 import { Message } from "@phosphor/messaging";
+
+import { Widget } from "@phosphor/widgets";
 
 import "../style/index.css";
 
@@ -90,7 +104,7 @@ function activate(app: JupyterLab, palette: ICommandPalette) {
 const extension: JupyterLabPlugin<void> = {
   id: "jupyterlab_xkcd",
   autoStart: true,
-  requires: [ICommandPalette],
+  requires: [ICommandPalette, ILayoutRestorer],
   activate: activate
 };
 
