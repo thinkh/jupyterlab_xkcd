@@ -2,22 +2,22 @@ import {
   JupyterLab,
   JupyterLabPlugin,
   ILayoutRestorer // new
-} from "@jupyterlab/application";
+} from '@jupyterlab/application';
 
 import {
   ICommandPalette,
   InstanceTracker // new
-} from "@jupyterlab/apputils";
+} from '@jupyterlab/apputils';
 
 import {
   JSONExt // new
-} from "@phosphor/coreutils";
+} from '@phosphor/coreutils';
 
-import { Message } from "@phosphor/messaging";
+import { Message } from '@phosphor/messaging';
 
-import { Widget } from "@phosphor/widgets";
+import { Widget } from '@phosphor/widgets';
 
-import "../style/index.css";
+import '../style/index.css';
 
 /**
  * An xckd comic viewer.
@@ -29,20 +29,20 @@ class XkcdWidget extends Widget {
   constructor() {
     super();
 
-    this.id = "xkcd-jupyterlab";
-    this.title.label = "xkcd.com";
+    this.id = 'xkcd-jupyterlab';
+    this.title.label = 'xkcd.com';
     this.title.closable = true;
-    this.addClass("jp-xkcdWidget");
+    this.addClass('jp-xkcdWidget');
 
-    this.img = document.createElement("img");
-    this.img.className = "jp-xkcdCartoon";
+    this.img = document.createElement('img');
+    this.img.className = 'jp-xkcdCartoon';
     this.node.appendChild(this.img);
 
     this.img.insertAdjacentHTML(
-      "afterend",
-      `<div class="jp-xkcdAttribution">
-        <a href="https://creativecommons.org/licenses/by-nc/2.5/" class="jp-xkcdAttribution" target="_blank">
-          <img src="https://licensebuttons.net/l/by-nc/2.5/80x15.png" />
+      'afterend',
+      `<div class='jp-xkcdAttribution'>
+        <a href='https://creativecommons.org/licenses/by-nc/2.5/' class='jp-xkcdAttribution' target='_blank'>
+          <img src='https://licensebuttons.net/l/by-nc/2.5/80x15.png' />
         </a>
       </div>`
     );
@@ -57,7 +57,7 @@ class XkcdWidget extends Widget {
    * Handle update requests for the widget.
    */
   onUpdateRequest(msg: Message): void {
-    fetch("https://egszlpbmle.execute-api.us-east-1.amazonaws.com/prod")
+    fetch('https://egszlpbmle.execute-api.us-east-1.amazonaws.com/prod')
       .then(response => {
         return response.json();
       })
@@ -77,15 +77,15 @@ function activate(
   palette: ICommandPalette,
   restorer: ILayoutRestorer
 ) {
-  console.log("JupyterLab extension jupyterlab_xkcd is activated!");
+  console.log('JupyterLab extension jupyterlab_xkcd is activated!');
 
   // Declare a widget variable
   let widget: XkcdWidget;
 
   // Add an application command
-  const command: string = "xkcd:open";
+  const command: string = 'xkcd:open';
   app.commands.addCommand(command, {
-    label: "Random xkcd comic",
+    label: 'Random xkcd comic',
     execute: () => {
       if (!widget) {
         // Create a new widget if one does not exist
@@ -109,14 +109,14 @@ function activate(
   });
 
   // Add the command to the palette.
-  palette.addItem({ command, category: "Tutorial" });
+  palette.addItem({ command, category: 'Tutorial' });
 
   // Track and restore the widget state
-  let tracker = new InstanceTracker<Widget>({ namespace: "xkcd" });
+  let tracker = new InstanceTracker<Widget>({ namespace: 'xkcd' });
   restorer.restore(tracker, {
     command,
     args: () => JSONExt.emptyObject,
-    name: () => "xkcd"
+    name: () => 'xkcd'
   });
 }
 
@@ -124,7 +124,7 @@ function activate(
  * Initialization data for the jupyterlab_xkcd extension.
  */
 const extension: JupyterLabPlugin<void> = {
-  id: "jupyterlab_xkcd",
+  id: 'jupyterlab_xkcd',
   autoStart: true,
   requires: [ICommandPalette, ILayoutRestorer],
   activate: activate
